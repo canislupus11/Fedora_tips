@@ -1,0 +1,129 @@
+Instalacja z fedora netinstall!
+
+-----------------------------------------------------------------------------
+GRUB_CMDLINE_LINUX="ipv6.disable=1 rhgb quiet processor.ignore_ppc=1" do /etc/default/grub, potem grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg; reboot
+rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-28.noarch.rpm
+rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-28.noarch.rpm
+dnf -y config-manager --add-repo=http://negativo17.org/repos/fedora-spotify.repo
+
+dnf -y install chromium chromium-libs-media-freeworld kate kile vim screen libreoffice NetworkManager-openvpn okular spectacle k3b audacity clementine lcd4linux thunderbird ncdu pciutils usbutils mlocate htop lm_sensors kdenlive smplayer quassel-client ark mc gimp openscad openocd stlink hugin geeqie vlc xine-ui cura telegram-desktop VirtualBox darktable inkscape pitivi cups nano rdesktop spotify-client texlive-collection-langpolish texlive-preprint texlive-secdot texlive-multirow texlive-cases arduino owncloud-client rdesktop gcc discord w_scan
+dnf -y install keepassx pinentry-qt mesa-vdpau-drivers libvdpau sshfs nmap bash-completion kernel-tools freeze wireshark-qt
+dnf -y remove gnome-disk-utility festival korganizer khelpcenter akregator kmag kfind jovie kwrite kamera kruler mariadb-server libreswan samba-client cifs-utils kmouth  kmousetool kcolorchooser konqueror kmail kget knode smtube opensc gwenview
+dnf autoremove
+dracut --regenerate-all --force
+usermod -a -G wireshark lupus ;usermod -a -G lock lupus ;usermod -a -G dialout lupus
+
+jako user: fmtutil --missing
+
+
+Kolory w terminalu:
+    do .bashrc:
+        if [[ ${EUID} == 0 ]] ; then 
+                PS1='\[\033[01;31m\]\h\[\033[01;34m\] \w \$\[\033[00m\] ' 
+        else 
+                PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] ' 
+        fi
+
+
+Normalne nazwy interfejsów sieciowych (eth0):
+    ln -s /dev/null /etc/systemd/network/99-default.link; dracut --force /boot/initramfs-$(uname -r).img $(uname -r)
+    
+
+Do radia: 
+    dnf -y install gpredict qsstv tucnak2 xlog gqrx fldigi rtl-sdr chirp wsjtx
+    
+Na laptopie: 
+        dnf -y install libva-intel-driver
+    
+Do skryptu HSowego: 
+    dnf -y install PyYAML python2-ldap3 python2-virtualenv-api python2-selenium chromedriver
+
+
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+    
+
+semanage port -a -t ssh_port_t -p tcp 5522
+echo "Port 5522" >> /etc/ssh/sshd_config
+echo "IPQoS 0x00" >> /etc/ssh/sshd_config
+echo "IPQoS 0x00" >> /etc/ssh/ssh_config
+
+
+NVIDIA:
+    Zainstalować nvidia, wywalic plik modułu naovou i wykonać /usr/sbin/akmods --force
+    dracut --force /boot/initramfs-$(uname -r).img $(uname -r)
+    
+JOURNALCTL:
+        https://wiki.manjaro.org/index.php?title=Limit_the_size_of_.log_files_%26_the_journal#How_to_set_a_maximum_size_limit_for_the_journal
+
+/etc/systemd/journald.conf
+
+SystemMaxUse=250M
+SystemMaxFileSize=50M
+
+        
+Chrome instalacja: 
+    
+cat << EOF > /etc/yum.repos.d/google-chrome.repo
+[google-chrome]
+name=google-chrome - \$basearch
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+EOF
+dnf -y install google-chrome-stable
+
+        
+WEBGL W CHROME:
+    http://www.hackingdream.net/2017/04/webgl-graphics-acceleration-google-earth-cannot-loaded.html
+    
+Czyszczenie locali: 
+    
+    localedef --list-archive | grep -v -i ^pl |grep -v -i ^en|grep -v -i ^polis| xargs localedef --delete-from-archive || build-locale-archive || dnf -y reinstall glibc-common
+    
+WYŁĄCZYĆ:
+     
+  systemctl disable abrtd.service || true
+  systemctl disable abrt-ccpp.service || true
+  systemctl disable abrt-oops.service || true
+  systemctl disable auditd.service
+  systemctl disable rngd.service || true
+  systemctl disable libvirtd.service || true
+  systemctl disable smartd.service
+  systemctl disable mcelog.service || true
+  systemctl disable lvm2-monitor.service || true
+  systemctl disable mdmonitor.service
+  systemctl disable fprintd.service || true
+  systemctl disable lvm2-monitor
+  systemctl disable iscsi
+  systemctl disable NetworkManager-wait-online
+    
+DIST UPGRADE:
+        sudo dnf upgrade --refresh; dnf -y install dnf-plugin-system-upgrade; dnf system-upgrade download --releasever=29; dnf system-upgrade reboot
+    
+
+DOCKER:
+            dnf -y install docker 
+
+systemctl start docker 
+   newgrp docker
+  sudo groupadd docker && sudo gpasswd -a ${USER} docker && sudo systemctl restart docker
+ 
+    
+    
+   System wide pulseaudio:
+    Put this text in the file /etc/systemd/system/pulseaudio.service:
+[Unit]
+Description=PulseAudio system server
+[Service]
+Type=notify
+Exec=pulseaudio --daemonize=no --system --realtime --log-target=journal
+[Install]
+WantedBy=multi-user.target
+This unit file is a straightforward method that starts PulseAudio and makes sure it is running.
+Now enable and start this unit file by running the following commands:
+systemctl --system enable pulseaudio.service
+systemctl --system start pulseaudio.service
+
