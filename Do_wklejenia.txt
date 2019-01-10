@@ -103,6 +103,18 @@ WYŁĄCZYĆ:
 DIST UPGRADE:
         sudo dnf upgrade --refresh; dnf -y install dnf-plugin-system-upgrade; dnf system-upgrade download --releasever=29; dnf system-upgrade reboot
     
+    
+fancontrol.service:
+ 
+[Unit]
+Description=Fan control daemon
+
+[Service]
+PIDFile=/var/run/fancontrol.pid
+ExecStart=/usr/sbin/fancontrol
+
+[Install]
+WantedBy=multi-user.target
 
 DOCKER:
             dnf -y install docker 
