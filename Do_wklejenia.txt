@@ -30,7 +30,7 @@ Normalne nazwy interfejsów sieciowych (eth0):
     
 
 Do radia: 
-    dnf -y install gpredict qsstv tucnak2 xlog gqrx fldigi rtl-sdr chirp wsjtx
+    dnf -y install gpredict qsstv tucnak2 xlog gqrx fldigi rtl-sdr chirp wsjtx cqrlog
     
 Na laptopie: 
         dnf -y install libva-intel-driver
