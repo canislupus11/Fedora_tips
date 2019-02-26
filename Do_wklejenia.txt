@@ -2,8 +2,8 @@ Instalacja z fedora netinstall!
 
 -----------------------------------------------------------------------------
 GRUB_CMDLINE_LINUX="ipv6.disable=1 rhgb quiet processor.ignore_ppc=1" do /etc/default/grub, potem grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg; reboot
-rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-28.noarch.rpm
-rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-28.noarch.rpm
+rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-29.noarch.rpm
+rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-29.noarch.rpm
 dnf -y config-manager --add-repo=http://negativo17.org/repos/fedora-spotify.repo
 
 dnf -y install chromium chromium-libs-media-freeworld kate kile vim screen libreoffice NetworkManager-openvpn okular spectacle k3b audacity clementine lcd4linux thunderbird ncdu pciutils usbutils mlocate htop lm_sensors kdenlive smplayer quassel-client ark mc gimp openscad openocd stlink hugin geeqie vlc xine-ui cura telegram-desktop VirtualBox darktable inkscape pitivi cups nano rdesktop spotify-client texlive-collection-langpolish texlive-preprint texlive-secdot texlive-multirow texlive-cases arduino owncloud-client rdesktop gcc discord w_scan obs-studio
