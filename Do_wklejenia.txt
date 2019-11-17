@@ -122,6 +122,15 @@ ExecStart=/usr/sbin/fancontrol
 [Install]
 WantedBy=multi-user.target
 
+
+/usr/lib/systemd/system-sleep/fancontrol.sh
+#!/bin/sh
+if [ "${1}" == "pre" ]; then
+  systemctl stop fancontrol
+elif [ "${1}" == "post" ]; then
+  systemctl start fancontrol
+fi
+
 lcd4linux.service:
 
 [Unit]
