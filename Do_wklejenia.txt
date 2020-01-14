@@ -108,7 +108,7 @@ WYŁĄCZYĆ:
   systemctl enable powertop.service
 ------------------------------------------     
 DIST UPGRADE:
-        sudo dnf upgrade --refresh; dnf -y install dnf-plugin-system-upgrade; dnf system-upgrade download --releasever=29; dnf system-upgrade reboot
+        dnf -y upgrade --refresh; dnf -y install dnf-plugin-system-upgrade; dnf -y system-upgrade download --releasever=31; dnf -y system-upgrade reboot
 ------------------------------------------   
     
 fancontrol.service:
