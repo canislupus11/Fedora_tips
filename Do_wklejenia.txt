@@ -1,17 +1,34 @@
 Instalacja z fedora netinstall!
 
 -----------------------------------------------------------------------------
-GRUB_CMDLINE_LINUX="ipv6.disable=1 rhgb quiet processor.ignore_ppc=1" do /etc/default/grub, potem grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg; reboot
+#GRUB_CMDLINE_LINUX="ipv6.disable=1 rhgb quiet processor.ignore_ppc=1" do /etc/default/grub, potem grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg; reboot
+
+#Normalne nazwy interfejsów sieciowych (eth0):
+ln -s /dev/null /etc/systemd/network/99-default.link; dracut --force /boot/initramfs-$(uname -r).img $(uname -r)
+
+
 rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-31.noarch.rpm
-rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-32.noarch.rpm
+rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-31.noarch.rpm
 dnf -y config-manager --add-repo=http://negativo17.org/repos/fedora-spotify.repo
 
 dnf -y install chromium chromium-libs-media-freeworld kate kile vim screen libreoffice NetworkManager-openvpn okular spectacle k3b audacity clementine lcd4linux thunderbird ncdu pciutils usbutils mlocate htop lm_sensors kdenlive smplayer quassel-client ark mc gimp openscad freecad librecad openocd stlink hugin geeqie vlc xine-ui cura telegram-desktop VirtualBox darktable inkscape pitivi cups nano rdesktop spotify-client texlive-collection-langpolish texlive-bbding texlive-wrapfig texlive-cancel texlive-extarrows texlive-preprint texlive-secdot texlive-multirow texlive-cases arduino owncloud-client rdesktop gcc discord w_scan obs-studio unrar dnf-plugin-system-upgrade keepassx pinentry-qt mesa-vdpau-drivers libvdpau sshfs nmap bash-completion kernel-tools freeze wireshark powertop plasma-applet-redshift-control fuse-exfat kcm_wacomtablet rtorrent
 
+#Chrome instalacja: 
+    
+cat << EOF > /etc/yum.repos.d/google-chrome.repo
+[google-chrome]
+name=google-chrome - \$basearch
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+EOF
+dnf -y install google-chrome-stable
+
 dnf -y remove gnome-disk-utility festival korganizer khelpcenter akregator kmag kfind jovie kwrite kamera kruler mariadb-server libreswan samba-client cifs-utils kmouth kmousetool kcolorchooser konqueror kmail kget knode smtube opensc gwenview
 
 #Do skryptu HSowego: 
-dnf -y install PyYAML python2-ldap3 python2-virtualenv-api python2-selenium chromedriver
+dnf -y install PyYAML python2-ldap3 python3-virtualenv-api python3-selenium
 
 dnf -y autoremove
 dracut --regenerate-all --force
@@ -29,8 +46,7 @@ Kolory w terminalu:
         fi
 
 
-Normalne nazwy interfejsów sieciowych (eth0):
-    ln -s /dev/null /etc/systemd/network/99-default.link; dracut --force /boot/initramfs-$(uname -r).img $(uname -r)
+
     
 
 Do radia: 
@@ -65,19 +81,6 @@ JOURNALCTL:
 
 SystemMaxUse=250M
 SystemMaxFileSize=50M
-
-        
-Chrome instalacja: 
-    
-cat << EOF > /etc/yum.repos.d/google-chrome.repo
-[google-chrome]
-name=google-chrome - \$basearch
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
-enabled=1
-gpgcheck=1
-gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
-EOF
-dnf -y install google-chrome-stable
 
         
 WEBGL W CHROME:
