@@ -102,7 +102,6 @@ WYŁĄCZYĆ:
   systemctl disable fprintd.service || true
   systemctl disable lvm2-monitor
   systemctl disable iscsi
-  systemctl disable NetworkManager-wait-online
   
   Jeśli laptop:
   systemctl enable powertop.service
