@@ -30,7 +30,7 @@ dnf -y install google-chrome-stable
 dnf -y remove gnome-disk-utility festival korganizer khelpcenter akregator kmag kfind jovie kwrite kamera kruler mariadb-server libreswan kmouth konqueror kmail kget knode smtube gwenview
 
 #Do skryptu HSowego: 
-#dnf -y install PyYAML python2-ldap3 python3-virtualenv-api python3-selenium
+#dnf -y install PyYAML python3-ldap3 python3-virtualenv-api python3-selenium
 
 dnf -y autoremove
 dracut --regenerate-all --force
