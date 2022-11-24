@@ -8,6 +8,7 @@ rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release
 dnf -y config-manager --add-repo=https://negativo17.org/repos/fedora-spotify.repo
 sh -c 'echo -e "[teams]\nname=teams\nbaseurl=https://packages.microsoft.com/yumrepos/ms-teams\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/teams.repo'
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
+dnf copr enable rezso/SDR
 
 cat << EOF > /etc/yum.repos.d/google-chrome.repo
 [google-chrome]
@@ -60,7 +61,7 @@ Kolory w terminalu:
     
 
 #Do radia: 
-    dnf -y install gpredict qsstv tucnak2 xlog gqrx fldigi flrig rtl-sdr wsjtx cqrlog urh gnuradio cqrlog mpg123
+    dnf -y install gpredict qsstv tucnak2 xlog gqrx sdr++ fldigi flrig rtl-sdr wsjtx cqrlog urh gnuradio cqrlog mpg123
     wget https://github.com/athena-metis/limesuite-fedora-build/blob/master/build-limesuite.sh; bash build-limesuite.s
     
 Na laptopie: 
