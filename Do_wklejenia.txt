@@ -61,7 +61,7 @@ Kolory w terminalu:
     
 
 #Do radia: 
-    dnf -y install gpredict qsstv tucnak2 xlog gqrx sdr++ fldigi flrig rtl-sdr wsjtx cqrlog urh gnuradio cqrlog mpg123
+    dnf -y install gpredict qsstv tucnak2 sdr++ fldigi flrig rtl-sdr wsjtx cqrlog urh gnuradio mpg123
     wget https://github.com/athena-metis/limesuite-fedora-build/blob/master/build-limesuite.sh; bash build-limesuite.s
     
 Na laptopie: 
