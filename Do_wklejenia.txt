@@ -3,12 +3,14 @@
 
 #Normalne nazwy interfejsów sieciowych (eth0):
 ln -s /dev/null /etc/systemd/network/99-default.link; dracut --force /boot/initramfs-$(uname -r).img $(uname -r)
-rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-36.noarch.rpm
-rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-36.noarch.rpm
+rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-37.noarch.rpm
+rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-37.noarch.rpm
 dnf -y config-manager --add-repo=https://negativo17.org/repos/fedora-spotify.repo
 sh -c 'echo -e "[teams]\nname=teams\nbaseurl=https://packages.microsoft.com/yumrepos/ms-teams\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/teams.repo'
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 dnf copr enable rezso/SDR
+
+echo "max_parallel_downloads=20" >> /etc/dnf/dnf.conf
 
 cat << EOF > /etc/yum.repos.d/google-chrome.repo
 [google-chrome]
