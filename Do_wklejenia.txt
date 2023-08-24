@@ -34,6 +34,10 @@ semanage port -a -t ssh_port_t -p tcp 5522
 echo "Port 5522" >> /etc/ssh/sshd_config
 echo "IPQoS 0x00" >> /etc/ssh/sshd_config
 echo "IPQoS 0x00" >> /etc/ssh/ssh_config
+
+echo "SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6015\", ATTRS{serial}==\"DA01A9G0\", SYMLINK+=\"FT1000MP\"" >> /etc/udev/rules.d/radio.rules
+udevadm control --reload-rules && udevadm trigger
+
     
 
 
