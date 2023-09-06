@@ -68,7 +68,7 @@ Kolory w terminalu:
 
 #Do radia: 
     dnf -y install gpredict qsstv tucnak2 sdr++ fldigi flrig rtl-sdr wsjtx cqrlog urh gnuradio mpg123
-    wget https://github.com/athena-metis/limesuite-fedora-build/blob/master/build-limesuite.sh; bash build-limesuite.s
+    wget https://raw.githubusercontent.com/athena-metis/limesuite-fedora-build/master/build-limesuite.sh; bash build-limesuite.sh
     
 Na laptopie: 
         dnf -y install libva-intel-driver
