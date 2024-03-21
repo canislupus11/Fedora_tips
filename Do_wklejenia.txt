@@ -100,7 +100,7 @@ WYŁĄCZYĆ:
   systemctl disable lvm2-monitor
   systemctl disable iscsi
   
-  Jeśli laptop:
+  #Jeśli laptop:
   systemctl enable powertop.service
 ------------------------------------------     
 DIST UPGRADE:
