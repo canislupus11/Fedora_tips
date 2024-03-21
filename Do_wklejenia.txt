@@ -3,14 +3,16 @@
 
 #Normalne nazwy interfejsów sieciowych (eth0):
 ln -s /dev/null /etc/systemd/network/99-default.link; dracut --force /boot/initramfs-$(uname -r).img $(uname -r)
-rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-37.noarch.rpm
-rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-37.noarch.rpm
+rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 dnf -y config-manager --add-repo=https://negativo17.org/repos/fedora-spotify.repo
 sh -c 'echo -e "[teams]\nname=teams\nbaseurl=https://packages.microsoft.com/yumrepos/ms-teams\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/teams.repo'
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 dnf copr enable rezso/SDR
 
 echo "max_parallel_downloads=20" >> /etc/dnf/dnf.conf
+echo "fastestmirror=1" >> /etc/dnf/dnf.conf
+echo "deltarpm=true" >> /etc/dnf/dnf.conf
 
 cat << EOF > /etc/yum.repos.d/google-chrome.repo
 [google-chrome]
@@ -21,7 +23,12 @@ gpgcheck=1
 gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
 EOF
 
+dnf -y remove gnome-disk-utility festival korganizer khelpcenter akregator kmag kfind jovie kwrite kamera kruler mariadb-server libreswan kmouth konqueror kmail kget knode smtube gwenview
 dnf -y install chromium chromium-libs-media-freeworld kate kile vim screen libreoffice NetworkManager-openvpn okular spectacle k3b audacity clementine lcd4linux thunderbird ncdu pciutils usbutils mlocate google-chrome-stable htop lm_sensors kdenlive smplayer quassel-client ark mc gimp openscad freecad librecad openocd stlink hugin geeqie vlc xine-ui cura telegram-desktop VirtualBox darktable inkscape pitivi cups powerline nano rdesktop spotify-client texlive-collection-langpolish texlive-bbding texlive-wrapfig texlive-cancel texlive-extarrows texlive-preprint latexmk stellarium texlive-secdot spotify-client texlive-multirow texlive-cases nextcloud-client rdesktop gcc discord w_scan obs-studio unrar glabels dnf-plugin-system-upgrade keepassxc pinentry-qt mesa-vdpau-drivers libvdpau sshfs moserial nmap bash-completion kernel-tools teams freeze wireshark powertop fuse-exfat kcm_wacomtablet rtorrent v4l2loopback cheese kicad kicad-packages3d pulseview
+
+dnf -y autoremove
+dracut --regenerate-all --force
+usermod -a -G wireshark lupus ;usermod -a -G lock lupus ;usermod -a -G dialout lupus
 
 # wylaczenie splitDNS
 systemctl disable systemd-resolved.service
@@ -35,21 +42,24 @@ echo "Port 5522" >> /etc/ssh/sshd_config
 echo "IPQoS 0x00" >> /etc/ssh/sshd_config
 echo "IPQoS 0x00" >> /etc/ssh/ssh_config
 
+echo "SystemMaxUse=250M" >> /etc/systemd/journald.conf
+echo "SystemMaxFileSize=50M" >> /etc/systemd/journald.conf
+
+#Do radia: 
+dnf -y install gpredict qsstv tucnak2 sdr++ fldigi flrig rtl-sdr wsjtx cqrlog urh gnuradio mpg123
+wget https://raw.githubusercontent.com/athena-metis/limesuite-fedora-build/master/build-limesuite.sh; bash build-limesuite.sh
+    
+#Na laptopie: 
+        dnf -y install libva-intel-driver
 echo "SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6015\", ATTRS{serial}==\"DA01A9G0\", SYMLINK+=\"FT1000MP\"" >> /etc/udev/rules.d/radio.rules
 udevadm control --reload-rules && udevadm trigger
 
-    
-
-
-
-dnf -y remove gnome-disk-utility festival korganizer khelpcenter akregator kmag kfind jovie kwrite kamera kruler mariadb-server libreswan kmouth konqueror kmail kget knode smtube gwenview
-
 #Do skryptu HSowego: 
 #dnf -y install PyYAML python3-ldap3 python3-virtualenv-api python3-selenium
+#virtualenv venv
+#source venv/bin/activate
+#pip install -r requirements.txt
 
-dnf -y autoremove
-dracut --regenerate-all --force
-usermod -a -G wireshark lupus ;usermod -a -G lock lupus ;usermod -a -G dialout lupus
 
 #jako user: fmtutil --missing
 
@@ -64,45 +74,15 @@ Kolory w terminalu:
 
 
 
-    
-
-#Do radia: 
-    dnf -y install gpredict qsstv tucnak2 sdr++ fldigi flrig rtl-sdr wsjtx cqrlog urh gnuradio mpg123
-    wget https://raw.githubusercontent.com/athena-metis/limesuite-fedora-build/master/build-limesuite.sh; bash build-limesuite.sh
-    
-Na laptopie: 
-        dnf -y install libva-intel-driver
-    
-
-
-
-virtualenv venv
-source venv/bin/activate
-pip install -r requirements.txt
-    
-
-
-
-
 NVIDIA:
     Zainstalować nvidia, wywalic plik modułu naovou i wykonać /usr/sbin/akmods --force
     dracut --force /boot/initramfs-$(uname -r).img $(uname -r)
     
-JOURNALCTL:
-        https://wiki.manjaro.org/index.php?title=Limit_the_size_of_.log_files_%26_the_journal#How_to_set_a_maximum_size_limit_for_the_journal
 
-/etc/systemd/journald.conf
 
-SystemMaxUse=250M
-SystemMaxFileSize=50M
-
-        
 WEBGL W CHROME:
     http://www.hackingdream.net/2017/04/webgl-graphics-acceleration-google-earth-cannot-loaded.html
     
-Czyszczenie locali: 
-    
-    localedef --list-archive | grep -v -i ^pl |grep -v -i ^en|grep -v -i ^polis| xargs localedef --delete-from-archive || build-locale-archive || dnf -y reinstall glibc-common
     
 WYŁĄCZYĆ:
      
