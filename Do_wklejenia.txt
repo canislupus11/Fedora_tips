@@ -9,6 +9,8 @@ dnf -y config-manager --add-repo=https://negativo17.org/repos/fedora-spotify.rep
 sh -c 'echo -e "[teams]\nname=teams\nbaseurl=https://packages.microsoft.com/yumrepos/ms-teams\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/teams.repo'
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 dnf copr enable rezso/SDR
+rpm --import https://packages.microsoft.com/keys/microsoft.asc
+echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
 
 echo "max_parallel_downloads=20" >> /etc/dnf/dnf.conf
 echo "fastestmirror=1" >> /etc/dnf/dnf.conf
@@ -24,7 +26,7 @@ gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
 EOF
 
 dnf -y remove gparted festival korganizer khelpcenter akregator kmag kfind jovie kwrite kamera kruler mariadb-server libreswan kmouth konqueror kmail kget knode smtube gwenview
-dnf -y install ark audacity bash-completion cheese clementine cups cura darktable discord dnf-plugin-system-upgrade freeze fuse-exfat gcc geeqie gimp git glabels google-chrome-stable htop hugin inkscape kate kcm_wacomtablet kdenlive keepassxc kernel-tools kicad kicad-packages3d kile latexmk librecad libreoffice libvdpau lm_sensors mc mesa-vdpau-drivers mlocate moserial nano ncdu NetworkManager-openvpn nextcloud-client nmap obs-studio okular openocd openscad pciutils pinentry-qt pitivi powerline powertop pulseview quassel-client rdesktop redshift rEFInd rtorrent screen smplayer spectacle spotify-client sshfs stellarium stlink telegram-desktop telnet texlive-bbding texlive-cancel texlive-cases texlive-collection-langpolish texlive-extarrows texlive-multirow texlive-preprint texlive-secdot texlive-wrapfig thunderbird unrar usbutils v4l2loopback vim VirtualBox vlc wireshark xine-ui
+dnf -y install ark audacity bash-completion cheese clementine code cups cura darktable discord dnf-plugin-system-upgrade freeze fuse-exfat gcc geeqie gimp git glabels google-chrome-stable htop hugin inkscape kate kcm_wacomtablet kdenlive keepassxc kernel-tools kicad kicad-packages3d kile latexmk librecad libreoffice libvdpau lm_sensors mc mesa-vdpau-drivers mlocate moserial nano ncdu NetworkManager-openvpn nextcloud-client nmap obs-studio okular openocd openscad pciutils pinentry-qt pitivi powerline powertop pulseview quassel-client rdesktop redshift rEFInd rtorrent screen smplayer spectacle spotify-client sshfs stellarium stlink telegram-desktop telnet texlive-bbding texlive-cancel texlive-cases texlive-collection-langpolish texlive-extarrows texlive-multirow texlive-preprint texlive-secdot texlive-wrapfig thunderbird unrar usbutils v4l2loopback vim VirtualBox vlc wireshark xine-ui
 
 dnf -y autoremove
 dracut --regenerate-all --force
