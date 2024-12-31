@@ -40,10 +40,9 @@ rm -f /etc/resolv.conf
 systemctl restart NetworkManager.service
 systemctl restart NetworkManager.service
 
-semanage port -a -t ssh_port_t -p tcp 5522
 echo "Port 5522" >> /etc/ssh/sshd_config
-echo "IPQoS 0x00" >> /etc/ssh/sshd_config
-echo "IPQoS 0x00" >> /etc/ssh/ssh_config
+semanage port -a -t ssh_port_t -p tcp 5522
+firewall-cmd --zone=public --add-port=5522/tcp --permanent
 
 echo "SystemMaxUse=250M" >> /etc/systemd/journald.conf
 echo "SystemMaxFileSize=50M" >> /etc/systemd/journald.conf
