@@ -3,10 +3,13 @@
 
 #Normalne nazwy interfejsów sieciowych (eth0):
 ln -s /dev/null /etc/systemd/network/99-default.link; dracut --force /boot/initramfs-$(uname -r).img $(uname -r)
+
+#REPOZYTORIA
 rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 rpm -ivh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 dnf -y config-manager --add-repo=https://negativo17.org/repos/fedora-spotify.repo
-sh -c 'echo -e "[teams]\nname=teams\nbaseurl=https://packages.microsoft.com/yumrepos/ms-teams\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/teams.repo'
+https://repo.teamsforlinux.de/teams-for-linux.asc; sudo rpm --import /tmp/teams-for-linux.asc
+curl -1sLf -o /etc/yum.repos.d/teams-for-linux.repo https://repo.teamsforlinux.de/rpm/teams-for-linux.repo
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 dnf copr enable rezso/SDR
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -26,7 +29,7 @@ gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
 EOF
 
 dnf -y remove gparted festival korganizer khelpcenter akregator kmag kfind jovie kwrite kamera kruler mariadb-server libreswan kmouth konqueror kmail kget knode smtube gwenview
-dnf -y install ark audacity bash-completion cheese clementine code cups cura darktable discord dnf-plugin-system-upgrade freeze fuse-exfat gcc geeqie gimp git glabels google-chrome-stable htop hugin inkscape kate kcm_wacomtablet kdenlive keepassxc kernel-tools kicad kicad-packages3d kile latexmk librecad libreoffice libvdpau lm_sensors mc mesa-vdpau-drivers mscore-fonts-all mlocate moserial nano ncdu NetworkManager-openvpn nextcloud-client nmap obs-studio okular openocd openscad pciutils pinentry-qt pitivi powerline powertop pulseview quassel-client rdesktop redshift rEFInd rtorrent screen smplayer spectacle lpf-spotify-client sshfs stellarium stlink telegram-desktop telnet texlive-bbding texlive-cancel texlive-cases texlive-collection-langpolish texlive-extarrows texlive-multirow texlive-preprint texlive-secdot texlive-wrapfig thunderbird unrar usbutils v4l2loopback vim VirtualBox vlc wireshark xine-ui libheif-freeworld libavcodec-freeworld libfreeaptx pipewire-codec-aptx
+dnf -y install ark audacity bash-completion cheese clementine code cups cura darktable discord dnf-plugin-system-upgrade freeze fuse-exfat gcc geeqie gimp git glabels google-chrome-stable htop hugin inkscape kate kcm_wacomtablet kdenlive keepassxc kernel-tools kicad kicad-packages3d kile latexmk librecad libreoffice libvdpau lm_sensors mc mesa-vdpau-drivers mscore-fonts-all mlocate moserial nano ncdu NetworkManager-openvpn nextcloud-client nmap obs-studio okular openocd openscad pciutils pinentry-qt pitivi powerline powertop pulseview quassel-client rdesktop redshift rEFInd rtorrent screen smplayer spectacle lpf-spotify-client sshfs stellarium stlink teams-for-linux telegram-desktop telnet texlive-bbding texlive-cancel texlive-cases texlive-collection-langpolish texlive-extarrows texlive-multirow texlive-preprint texlive-secdot texlive-wrapfig thunderbird unrar usbutils v4l2loopback vim VirtualBox vlc wireshark xine-ui libheif-freeworld libavcodec-freeworld libfreeaptx pipewire-codec-aptx
 
 
 dnf -y autoremove
