@@ -34,7 +34,7 @@ dnf -y install ark audacity bash-completion cheese clementine code cups cura dar
 
 dnf -y autoremove
 dracut --regenerate-all --force
-usermod -a -G wireshark lupus ;usermod -a -G lock lupus ;usermod -a -G dialout lupus
+usermod -a -G wireshark lupus ;usermod -a -G lock lupus ;usermod -a -G dialout lupus; usermod -a -G vboxusers lupus
 
 # wylaczenie splitDNS
 systemctl disable systemd-resolved.service
